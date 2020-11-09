@@ -1,8 +1,15 @@
 #!/bin/sh
-
+ENV_LIST="local dev"
+ENV_TYPE=$1
 PROJECT_NAME=$(basename $(pwd))
-ENV_FILE=.env
-DOCKER_COMPOSE_FILE=docker-compose.yml
+
+if echo $ENV_LIST | grep -w $ENV_TYPE > /dev/null; then
+    ENV_FILE=.env.$ENV_TYPE
+    DOCKER_COMPOSE_FILE=$ENV_TYPE.yml
+else
+   echo "Option must be 'local' or 'dev'"
+   return
+fi
 
 
 # Export environment variables

@@ -67,22 +67,46 @@ pyenv install 3.7.9
 
 # Criar um virtualenv:
 pyenv virtualenv 3.7.9 brasil.io
+```
 
+Dentro da opção de rodar o projeto com Docker, existem duas alternativas:
+
+   - Django rodando em um container (**dev**)
+   - Django rodando em sua máquina (**local**)
+
+#### Opção dev (django rodando em um container)
+
+```bash
 # Copie o arquivo de env de exemplo e edite o .env de acordo com suas preferências
-cp env.example .env
+cp env.example.dev .env
 
-# Ativar o virtualenv
-source .activate
+# Preparar o projeto
+source .activate dev
 
-# Instalar dependências
-pip install -r requirements.txt
-
-# Iniciar os containers (bancos de dados, e-mail)
-docker-compose up -d
+# Acessar o container rodando Django
+docker exec -it brasilio_web_1 bash
 
 # Criar schema e popular base de dados
 python manage.py migrate
 python manage.py update_data
+
+```
+
+#### Opção local (django rodando na sua máquina)
+```bash
+cp env.example.local .env
+
+# Instalar dependências
+pip install -r requirements.txt
+
+# Preparar o projeto
+source .activate local
+
+# Criar schema e popular base de dados
+python manage.py migrate
+python manage.py update_data
+
+# Espere alguns segundos até os outros serviços iniciarem
 
 # Iniciar o servidor HTTP
 python manage.py runserver
