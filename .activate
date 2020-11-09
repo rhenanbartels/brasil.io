@@ -1,10 +1,10 @@
 #!/bin/sh
 ENV_LIST="local dev"
 ENV_TYPE=$1
+ENV_FILE=.env
 PROJECT_NAME=$(basename $(pwd))
 
 if echo $ENV_LIST | grep -w $ENV_TYPE > /dev/null; then
-    ENV_FILE=.env.$ENV_TYPE
     DOCKER_COMPOSE_FILE=$ENV_TYPE.yml
 else
    echo "Option must be 'local' or 'dev'"
