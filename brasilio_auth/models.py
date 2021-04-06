@@ -1,5 +1,8 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.db import models
+
+
+User._meta.get_field("email")._unique = True
 
 
 class NewsletterSubscriberQuerySet(models.QuerySet):
@@ -10,4 +13,4 @@ class NewsletterSubscriberQuerySet(models.QuerySet):
 class NewsletterSubscriber(models.Model):
     objects = NewsletterSubscriberQuerySet.as_manager()
 
-    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
